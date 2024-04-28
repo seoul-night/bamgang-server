@@ -1,8 +1,8 @@
 ---
 name: 'feat:'
 about: 기능 개발
-title: ''
-labels: ''
+title: '(예시)feat: OO API 제작'
+labels: 'feat'
 assignees: ''
 
 ---
