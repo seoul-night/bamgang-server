@@ -57,10 +57,10 @@ public class TrailServiceImpl implements TrailService{
     @Override
     public List<GetTrailResponseDto> getNearTrail(Double latitude, Double longitude) {
         // 조회할 범위 설정
-        Double minLatitude = latitude - 0.01;
-        Double maxLatitude = latitude + 0.01;
-        Double minLongitude = longitude - 0.01;
-        Double maxLongitude = longitude + 0.01;
+        Double minLatitude = latitude - 0.05;
+        Double maxLatitude = latitude + 0.05;
+        Double minLongitude = longitude - 0.05;
+        Double maxLongitude = longitude + 0.05;
 
         // 해당 범위 내에 있는 주변 산책로들을 조회한다.
         List<Integer> nearTrailStarts = trailStartRepository.findTrailIdsByCoordinates(
