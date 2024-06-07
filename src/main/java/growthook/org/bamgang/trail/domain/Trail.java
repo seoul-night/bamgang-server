@@ -42,4 +42,10 @@ public class Trail {
 
     @Column(name = "longitude_list")
     private Double[] longitudeList;
+
+    // TrailStart와의 일대일 관계 설정
+    @OneToOne
+    @JoinColumn(name = "trail_id", referencedColumnName = "trail_id", insertable = false, updatable = false)
+    private TrailStart trailStart;
 }
+
