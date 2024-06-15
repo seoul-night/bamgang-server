@@ -1,15 +1,19 @@
 package growthook.org.bamgang.members.dto.token;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 public class MemberToken {
     private String nickName;
-
     private String profile;
-
     private String id;
+
+    @Builder
+    public MemberToken(String id, String nickName, String profile){
+        this.id = id;
+        this.nickName = nickName;
+        this.profile = profile;
+    }
 }
