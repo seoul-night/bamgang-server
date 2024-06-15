@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Clock;
 import java.util.Date;
 
 @Component
@@ -19,11 +20,16 @@ public class JWTUtil {
     @Value("${kakao-key}")
     private String secretKeyPlain;
 
-    private final long EXPIRATION_SECONDS = 60 * 60 * 24 *365;	//24시간
+    private final long EXPIRATION_SECONDS = 60 * 60 * 24 * 30;	//1달
 
     //application.properties에 등록된 변수
     public SecretKey getSecretKey() {
-        return Keys.hmacShaKeyFor(secretKeyPlain.getBytes());
+        byte[] keyBytes = secretKeyPlain.getBytes();
+        if(keyBytes.length < 32){
+            // 생성된 비밀 키의 길이가 충분히 긴지 확인하고,32바이트보다 짧다면, 예외처리
+            throw new IllegalArgumentException("The secret key must be at lest 256 bits (32 bytes) long.");
+        }
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     // 토큰 생성
@@ -46,19 +52,23 @@ public class JWTUtil {
             Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token);
             return true;
         } catch (Exception e) {
+            log.error("Invalid token: {}", e.getMessage());
             return false;
         }
     }
 
-    // 토큰으로 부터 ID 조회
-    public int getMemberIdFromToken(String token) {
+    // 토큰으로 부터 MemberToken 빌드
+    public MemberToken getMemberTokenFromToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(getSecretKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
 
-        int memberId = claims.get("memberId", Integer.class);
-        return memberId;
+        return MemberToken.builder()
+                .id(claims.get("id", String.class))
+                .nickName(claims.get("nickName", String.class))
+                .profile(claims.get("profileName", String.class))
+                .build();
     }
 }
