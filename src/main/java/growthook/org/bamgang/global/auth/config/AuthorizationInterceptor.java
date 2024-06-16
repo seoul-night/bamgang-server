@@ -21,6 +21,11 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
+
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            return true; // OPTIONS 요청은 통과시킵니다.
+        }
+
         String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
 
         if(authorizationHeader == null || !authorizationHeader.startsWith(TOKEN_TYPE)){
