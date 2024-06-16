@@ -22,11 +22,11 @@ public class WebmvcConfig implements WebMvcConfigurer {
                 .maxAge(3000);
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(authorizationInterceptor)
-//                .addPathPatterns("/**")
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authorizationInterceptor)
+                .addPathPatterns("/**")
 //                .excludePathPatterns("/members/kakao/login","/members/kakao/oauth","/members/kakao/login/test","/members/kakao/oauth/test","/members/search/**","/members/walks/search/complete/**","/members/walks/**");
-////                .excludePathPatterns("/members/kakao/login","/members/kakao/oauth","/members/kakao/login/test","/members/kakao/oauth/test");
-//    }
+                .excludePathPatterns("/members/kakao/login","/members/kakao/oauth","/members/kakao/login/test","/members/kakao/oauth/test");
+    }
 }
