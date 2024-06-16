@@ -36,7 +36,7 @@ public class MemberController {
 
 
     @GetMapping("/{id}")
-    public GetMemberResponseDto getUserInfo(@PathVariable int id){
+    public GetMemberResponseDto getUserInfo(@PathVariable("id") int id){
         GetMemberResponseDto getMemberResponseDto = memberService.findById(id);
         return getMemberResponseDto;
     }
@@ -47,7 +47,7 @@ public class MemberController {
     }
 
     @GetMapping("/walks/complete/{id}")
-    public List<GetFinishedWalkResponseDto> getUserInfo3(@PathVariable int id){
+    public List<GetFinishedWalkResponseDto> getUserInfo3(@PathVariable("id") int id){
         List<GetFinishedWalkResponseDto> walks = memberService.findFinishedWalkById(id);
         return walks;
     }
@@ -69,7 +69,7 @@ public class MemberController {
     }
 
     @GetMapping("/walks/select/{id}")
-    public List<GetPickedWalkResponseDto> getUserInfo4(@PathVariable int id){
+    public List<GetPickedWalkResponseDto> getUserInfo4(@PathVariable("id") int id){
         List<GetPickedWalkResponseDto> walks = memberService.findPickedWalkById(id);
         return walks;
     }
